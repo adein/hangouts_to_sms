@@ -3,7 +3,9 @@ Hangouts to SMS/MMS
 
 Scripts to convert exported Hangouts SMS/MMS messages to an SMS XML file.
  This is intended for Project Fi users that have been using Hangouts for texting along with the
- "Project Fi calls and SMS" option enabled who want to switch back to normal SMS/MMS apps. 
+ "Project Fi calls and SMS" option enabled who want to switch back to normal SMS/MMS apps.
+ 
+ These scripts and steps will allow you to export your Project Fi SMS/MMS messages from the Hangouts "cloud" and import them into the normal SMS/MMS database on your phone, thus retaining your message history.
 
 ##Liability, etc
 **Use at your own risk!** I claim no responsibility for the results of using these scripts or the steps outlined below. I do not provide any warranty or support.
