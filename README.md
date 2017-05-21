@@ -42,10 +42,10 @@ Scripts to convert exported Hangouts SMS/MMS messages to an SMS XML file.
 7. Download it to your computer when it's finished
 
 ##Converting Hangouts to Titanium Backup XML:
-1. Edit "YOUR_PHONE_NUMBER" variable in hangouts_to_sms.py to contain your cell number.
-    * This is because the number seems to be missing from some conversations.
-2. Extract the Hangouts archive and copy the Hangouts.json file to the same folder as the script.
-2. Run the hangouts_to_sms.py script
+1. run the following with your phone number instead:
+
+    $ ./hangouts_to_sms.py -ph +14125551212 -if ./Hangouts.json -of messages.xml
+
 
 ##Importing XML using Titanium Backup:
 1. Copy the messages.xml output file to your phone (I used Google Drive to transfer it)
