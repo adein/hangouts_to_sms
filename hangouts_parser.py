@@ -5,6 +5,10 @@ from message import Message
 from conversation import Conversation
 from attachment import Attachment
 
+def ns_to_dict(ns):
+    if isinstance(ns, list): return [ ns_to_dict(i) for i in ns ]
+    if isinstance(ns, Namespace): return { k: ns_to_dict(v) for k,v in vars(ns).items() }
+    return ns
 
 class HangoutsParser:
     """Parses the Google Takeout JSON export for Hangouts SMS/MMS messages."""
@@ -18,13 +22,13 @@ class HangoutsParser:
         """
         conversations = []
         self_gaia_id = None  # gaia_id for the phone owner
-        with open(hangouts_file_name, 'rb') as data_file:
+        with open(hangouts_file_name, 'rt') as data_file:
             # Read the Hangouts JSON file and turn into objects
             data = json.load(data_file, object_hook=lambda d: Namespace(**d))
-            # Iterate through each conversation in the list
-            for conversation_state in data.conversation_state:
+            # Iterate through each conversation in the listi
+            for conversation_state in data.conversations:
                 # Get the nested conversation_state
-                state = getattr(conversation_state, "conversation_state", None)
+                state = getattr(conversation_state, "conversation", None)
                 if state is not None:
                     # Get the conversation object
                     conversation = getattr(state, "conversation", None)
@@ -54,7 +58,7 @@ class HangoutsParser:
                                                                                        read_state, user_phone_number,
                                                                                        self_gaia_id)
                     # Get the conversation messages
-                    events = getattr(state, "event", None)
+                    events = getattr(conversation_state, "events", None)
                     if events is not None:
                         current_conversation.messages = self._process_messages(events)
                     conversations.append(current_conversation)
