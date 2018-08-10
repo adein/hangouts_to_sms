@@ -22,7 +22,7 @@ class HangoutsParser:
         """
         conversations = []
         self_gaia_id = None  # gaia_id for the phone owner
-        with open(hangouts_file_name, 'rt') as data_file:
+        with open(hangouts_file_name, 'rt', encoding='utf-8') as data_file:
             # Read the Hangouts JSON file and turn into objects
             data = json.load(data_file, object_hook=lambda d: Namespace(**d))
             # Iterate through each conversation in the listi
