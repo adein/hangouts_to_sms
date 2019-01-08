@@ -1,6 +1,8 @@
 Hangouts to SMS/MMS
 ======
 
+### Note: This is not currently maintained and reportedly no longer works as-is.
+
 Scripts to convert exported Hangouts SMS/MMS messages to an SMS XML file.
  This is intended for Project Fi users that have been using Hangouts for texting along with the
  "Project Fi calls and SMS" option enabled who want to switch back to normal SMS/MMS apps.
