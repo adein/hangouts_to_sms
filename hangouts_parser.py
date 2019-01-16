@@ -5,6 +5,10 @@ from message import Message
 from conversation import Conversation
 from attachment import Attachment
 
+def ns_to_dict(ns):
+    if isinstance(ns, list): return [ ns_to_dict(i) for i in ns ]
+    if isinstance(ns, Namespace): return { k: ns_to_dict(v) for k,v in vars(ns).items() }
+    return ns
 
 class HangoutsParser:
     """Parses the Google Takeout JSON export for Hangouts SMS/MMS messages."""
@@ -18,13 +22,13 @@ class HangoutsParser:
         """
         conversations = []
         self_gaia_id = None  # gaia_id for the phone owner
-        with open(hangouts_file_name, 'rb') as data_file:
+        with open(hangouts_file_name, 'rt', encoding='utf-8') as data_file:
             # Read the Hangouts JSON file and turn into objects
             data = json.load(data_file, object_hook=lambda d: Namespace(**d))
-            # Iterate through each conversation in the list
-            for conversation_state in data.conversation_state:
+            # Iterate through each conversation in the listi
+            for conversation_state in data.conversations:
                 # Get the nested conversation_state
-                state = getattr(conversation_state, "conversation_state", None)
+                state = getattr(conversation_state, "conversation", None)
                 if state is not None:
                     # Get the conversation object
                     conversation = getattr(state, "conversation", None)
@@ -54,7 +58,7 @@ class HangoutsParser:
                                                                                        read_state, user_phone_number,
                                                                                        self_gaia_id)
                     # Get the conversation messages
-                    events = getattr(state, "event", None)
+                    events = getattr(conversation_state, "events", None)
                     if events is not None:
                         current_conversation.messages = self._process_messages(events)
                     conversations.append(current_conversation)
@@ -168,14 +172,14 @@ class HangoutsParser:
         for current_attachment in attachment_list:
             embed_item = getattr(current_attachment, "embed_item", None)
             if embed_item is not None:
-                plus_photo = getattr(embed_item, "embeds.PlusPhoto.plus_photo", None)
+                plus_photo = getattr(embed_item, "plus_photo", None)
                 if plus_photo is not None:
                     current_attachment = Attachment()
                     current_attachment.album_id = self._try_int_attribute(plus_photo, "album_id")
                     current_attachment.photo_id = self._try_int_attribute(plus_photo, "photo_id")
                     current_attachment.media_type = getattr(plus_photo, "media_type", None)
                     current_attachment.original_content_url = getattr(plus_photo, "original_content_url", None)
-                    current_attachment.download_url = getattr(plus_photo, "download_url", None)
+                    current_attachment.download_url = getattr(plus_photo, "url", None)
                     attachments.append(current_attachment)
         return attachments
 

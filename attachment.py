@@ -7,7 +7,7 @@ class Attachment:
     photo_id = None  # Google Photos ID (not used)
     media_type = None  # Type of attachment: PHOTO, ANIMATED_PHOTO, VIDEO
     original_content_url = None
-    download_url = None  # Not used, since it doesn't seem to work
+    download_url = None  # This is used to get file extension
 
     def __init__(self, album_id=None, photo_id=None, media_type=None, original_content_url=None, download_url=None):
         self.album_id = album_id
