@@ -172,14 +172,14 @@ class HangoutsParser:
         for current_attachment in attachment_list:
             embed_item = getattr(current_attachment, "embed_item", None)
             if embed_item is not None:
-                plus_photo = getattr(embed_item, "embeds.PlusPhoto.plus_photo", None)
+                plus_photo = getattr(embed_item, "plus_photo", None)
                 if plus_photo is not None:
                     current_attachment = Attachment()
                     current_attachment.album_id = self._try_int_attribute(plus_photo, "album_id")
                     current_attachment.photo_id = self._try_int_attribute(plus_photo, "photo_id")
                     current_attachment.media_type = getattr(plus_photo, "media_type", None)
                     current_attachment.original_content_url = getattr(plus_photo, "original_content_url", None)
-                    current_attachment.download_url = getattr(plus_photo, "download_url", None)
+                    current_attachment.download_url = getattr(plus_photo, "url", None)
                     attachments.append(current_attachment)
         return attachments
 
