@@ -15,15 +15,16 @@ Scripts to convert exported Hangouts SMS/MMS messages to an SMS XML file.
 ## Requirements:
 * Python 3
 * Titanium Backup **PRO**
+* Rooted Android Device
 
 ## Notes:
 * Titanium backup will overwrite the existing SMS/MMS database on the phone.
-* Root is not required
+* Root **is** required, Google removed non root functionality for Titanium Backup SMS backup/restore.
 
 ## Phone Setup:
-1. Install Titanium Backup **PRO** (root is **not** required for SMS/MMS backup/restore)
+1. Install Titanium Backup **PRO** (root **is** required for SMS/MMS backup/restore)
 2. Backup existing SMS/MMS messages using Titanium backup:
-    * Open Titanium Backup (dismiss the message about Root if it appears)
+    * Open Titanium Backup
     * Press 'MENU' at the top right
     * Scroll down and select 'Backup data to XML...'
     * Select 'Messages (SMS & MMS)'
