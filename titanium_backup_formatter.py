@@ -134,8 +134,12 @@ class TitaniumBackupFormatter:
                                         if attachment.original_content_url is not None:
                                             data = self._convert_url_to_base64_data(attachment.original_content_url)
                                         if data is not None:
-                                            message_string += MMS_PART.format("image/jpeg", order, "base64", data)
-                                            order += 1
+                                            if ".png" in attachment.download_url:
+                                                message_string += MMS_PART.format("image/png", order, "base64", data)
+                                                order += 1
+                                            else:
+                                                message_string += MMS_PART.format("image/jpeg", order, "base64", data)
+                                                order += 1
                                         else:
                                             print("Error: unable to download image data!")
                                     elif attachment.media_type == "ANIMATED_PHOTO":
